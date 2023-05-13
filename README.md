@@ -15,6 +15,6 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-## Installation 
+## How to run 
 1. run `flutter packages get`
 2. run `flutter run -d Chrome`
