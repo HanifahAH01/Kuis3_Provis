@@ -16,9 +16,9 @@ class UMKMModel {
       required this.jenis}); //constructor
 }
 
-class ActivityCubit extends Cubit<List<UMKMModel>> {
+class UMKMCubit extends Cubit<List<UMKMModel>> {
   String url = "http://178.128.17.76:8000/daftar_umkm";
-  ActivityCubit() : super([]);
+  UMKMCubit() : super([]);
 
   List<UMKMModel> ListActivityModel = <UMKMModel>[];
   //map dari json ke atribut
@@ -48,7 +48,7 @@ class UMKMDetailModel {
   String id;
   String nama;
   String jenis;
-  String omzetBulanan;
+  String omzetBulan;
   String lamaUsaha;
   String memberSejak;
   String jumlahPinjamanSukses;
@@ -56,7 +56,7 @@ class UMKMDetailModel {
       {required this.id,
       required this.nama,
       required this.jenis,
-      required this.omzetBulanan,
+      required this.omzetBulan,
       required this.lamaUsaha,
       required this.memberSejak,
       required this.jumlahPinjamanSukses}); //constructor
@@ -68,7 +68,7 @@ class UMKMDetailCubit extends Cubit<UMKMDetailModel> {
             id: "",
             nama: "",
             jenis: "",
-            omzetBulanan: "",
+            omzetBulan: "",
             lamaUsaha: "",
             memberSejak: "",
             jumlahPinjamanSukses: ""));
@@ -78,7 +78,7 @@ class UMKMDetailCubit extends Cubit<UMKMDetailModel> {
     var id = json["id"];
     var nama = json["nama"];
     var jenis = json["jenis"];
-    var omzetBulanan = json["omzet_bulanan"];
+    var omzetBulan = json["omzet_bulan"];
     var lamaUsaha = json["lama_usaha"];
     var memberSejak = json["member_sejak"];
     var jumlahPinjamanSukses = json["jumlah_pinjaman_sukses"];
@@ -87,7 +87,7 @@ class UMKMDetailCubit extends Cubit<UMKMDetailModel> {
         id: id,
         nama: nama,
         jenis: jenis,
-        omzetBulanan: omzetBulanan,
+        omzetBulan: omzetBulan,
         lamaUsaha: lamaUsaha,
         memberSejak: memberSejak,
         jumlahPinjamanSukses: jumlahPinjamanSukses));
@@ -114,8 +114,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<ActivityCubit>(
-          create: (_) => ActivityCubit(),
+        BlocProvider<UMKMCubit>(
+          create: (_) => UMKMCubit(),
         ),
         BlocProvider<UMKMDetailCubit>(
           create: (_) => UMKMDetailCubit(),
@@ -135,33 +135,33 @@ class HalamanUtama extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text("My App")),
+        appBar: AppBar(title: const Text("My App")),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              BlocBuilder<ActivityCubit, List<UMKMModel>>(
-                // ignore: non_constant_identifier_names
-                builder: (context, ListActivityModel) {
+              BlocBuilder<UMKMCubit, List<UMKMModel>>(
+                builder: (context, ListUMKMModel) {
                   return Column(
                     children: [
                       const Text(
                           "NIM: 2008433, Nama: Aji Muhammad Zapar; NIM: 2000152, Nama: Hanifah Al Humaira; Saya berjanji tidak akan berbuat curang data atau membantu orang lain berbuat curang"),
+                      const Padding(padding: EdgeInsets.all(80)),
                       ElevatedButton(
                         onPressed: () {
-                          context.read<ActivityCubit>().fetchData();
+                          context.read<UMKMCubit>().fetchData();
                         },
                         child: const Text("Reload Daftar UMKM"),
                       ),
                       const SizedBox(
                         height: 16,
                       ),
-                      if (ListActivityModel.isNotEmpty)
+                      if (ListUMKMModel.isNotEmpty)
                         ListView.builder(
                           shrinkWrap: true,
-                          itemCount: ListActivityModel.length,
+                          itemCount: ListUMKMModel.length,
                           itemBuilder: (context, index) {
-                            var activity = ListActivityModel[index];
+                            var activity = ListUMKMModel[index];
                             return InkWell(
                               onTap: () => {
                                 Navigator.of(context)
@@ -188,7 +188,7 @@ class HalamanUtama extends StatelessWidget {
                             );
                           },
                         ),
-                      if (ListActivityModel.isEmpty)
+                      if (ListUMKMModel.isEmpty)
                         const Text('Data tidak ditemukan')
                     ],
                   );
@@ -210,7 +210,7 @@ class DetailUMKM extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detail umkm'),
+        title: const Text('Detil umkm'),
       ),
       body: Center(
         child: BlocBuilder<UMKMDetailCubit, UMKMDetailModel>(
@@ -220,7 +220,15 @@ class DetailUMKM extends StatelessWidget {
 
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text("Jenis: ${umkmmodel.jenis}")],
+              children: [
+                Text("Nama: ${umkmmodel.nama}"),
+                Text("Jenis: ${umkmmodel.jenis}"),
+                Text("Member sejak: ${umkmmodel.memberSejak}"),
+                Text("Omzet per bulan: ${umkmmodel.omzetBulan}"),
+                Text("Lama usaha: ${umkmmodel.lamaUsaha}"),
+                Text(
+                    "Jumlah Pinjaman Sukses: ${umkmmodel.jumlahPinjamanSukses}"),
+              ],
             );
           },
         ),
