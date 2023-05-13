@@ -176,7 +176,6 @@ class HalamanUtama extends StatelessWidget {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(activity.id.toString()),
                                     Text(activity.nama),
                                     Text(activity.jenis),
                                   ],
