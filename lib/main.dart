@@ -75,6 +75,8 @@ class HalamanUtama extends StatelessWidget {
                 builder: (context, ListActivityModel) {
                   return Column(
                     children: [
+                      const Text(
+                          "NIM: 2008433, Nama: Aji Muhammad Zapar; NIM: 2000152, Nama: Hanifah Al Humaira; Saya berjanji tidak akan berbuat curang data atau membantu orang lain berbuat curang"),
                       ElevatedButton(
                         onPressed: () {
                           context.read<ActivityCubit>().fetchData();
