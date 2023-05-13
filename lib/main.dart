@@ -158,13 +158,13 @@ class HalamanUtama extends StatelessWidget {
                           shrinkWrap: true,
                           itemCount: listUmkmModel.length,
                           itemBuilder: (context, index) {
-                            var activity = listUmkmModel[index];
+                            var umkm = listUmkmModel[index];
                             return InkWell(
                               onTap: () => {
                                 Navigator.of(context)
                                     .push(MaterialPageRoute(builder: (context) {
                                   return DetailUMKM(
-                                    id: activity.id,
+                                    id: umkm.id,
                                   );
                                 }))
                               },
@@ -176,8 +176,8 @@ class HalamanUtama extends StatelessWidget {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(activity.nama),
-                                    Text(activity.jenis),
+                                    Text(umkm.nama),
+                                    Text(umkm.jenis),
                                   ],
                                 ),
                               ),
