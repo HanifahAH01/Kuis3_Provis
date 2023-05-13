@@ -1,10 +1,7 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-// import 'detail_umkm.dart';
 
 class UMKMModel {
   String id;
@@ -20,7 +17,7 @@ class UMKMCubit extends Cubit<List<UMKMModel>> {
   String url = "http://178.128.17.76:8000/daftar_umkm";
   UMKMCubit() : super([]);
 
-  List<UMKMModel> ListActivityModel = <UMKMModel>[];
+  List<UMKMModel> ListUMKModel = <UMKMModel>[];
   //map dari json ke atribut
   void setFromJson(Map<String, dynamic> json) {
     var data = json["data"];
@@ -29,9 +26,9 @@ class UMKMCubit extends Cubit<List<UMKMModel>> {
       String nama = val['nama'];
       String jenis = val['jenis'];
 
-      ListActivityModel.add(UMKMModel(id: id, nama: nama, jenis: jenis));
+      ListUMKModel.add(UMKMModel(id: id, nama: nama, jenis: jenis));
     }
-    emit(ListActivityModel);
+    emit(ListUMKModel);
   }
 
   void fetchData() async {
@@ -141,7 +138,7 @@ class HalamanUtama extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               BlocBuilder<UMKMCubit, List<UMKMModel>>(
-                builder: (context, ListUMKMModel) {
+                builder: (context, listUmkmModel) {
                   return Column(
                     children: [
                       const Text(
@@ -156,12 +153,12 @@ class HalamanUtama extends StatelessWidget {
                       const SizedBox(
                         height: 16,
                       ),
-                      if (ListUMKMModel.isNotEmpty)
+                      if (listUmkmModel.isNotEmpty)
                         ListView.builder(
                           shrinkWrap: true,
-                          itemCount: ListUMKMModel.length,
+                          itemCount: listUmkmModel.length,
                           itemBuilder: (context, index) {
-                            var activity = ListUMKMModel[index];
+                            var activity = listUmkmModel[index];
                             return InkWell(
                               onTap: () => {
                                 Navigator.of(context)
@@ -188,7 +185,7 @@ class HalamanUtama extends StatelessWidget {
                             );
                           },
                         ),
-                      if (ListUMKMModel.isEmpty)
+                      if (listUmkmModel.isEmpty)
                         const Text('Data tidak ditemukan')
                     ],
                   );
