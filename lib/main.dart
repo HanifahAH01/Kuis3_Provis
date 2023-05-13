@@ -65,6 +65,7 @@ class HalamanUtama extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(title: Text("My App")),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
